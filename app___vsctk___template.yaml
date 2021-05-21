@@ -1,0 +1,9 @@
+Resources:
+  myServerlessProject:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda/getUser.handler
+      CodeUri: 'D:/Projects/TestingShit/serverless/thereretry/myServerlessProject'
+      Runtime: nodejs12.x
+      Environment:
+        Variables: {}
