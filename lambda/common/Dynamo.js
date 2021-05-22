@@ -50,7 +50,7 @@ const Dynamo = {
             TableName: tableName,
             Key: { [primaryKey]: primaryKeyValue },
             UpdateExpression: `set ${updateKey} = :updateValue`,
-            ExpressionAttributeValue: {
+            ExpressionAttributeValues: {
                 ':updateValue': updateValue,
             }
         }
@@ -58,19 +58,19 @@ const Dynamo = {
         return documentClient.update(params).promise();
     },
 
-    async query({ tableName, index, quereKey, queryValue }) {
+    async query({ tableName, index, queryKey, queryValue }) {
         const params = {
             TableName: tableName,
             IndexName: index,
-            KeyConditionExpression: `${quereKey} = :hkey`,
-            ExpressionAttributeValue: {
+            KeyConditionExpression: `${queryKey} = :hkey`,
+            ExpressionAttributeValues: {
                 ':hkey': queryValue
             }
         };
 
         const res = await documentClient.query(params).promise();
 
-        return res.Item || [];
+        return res.Items || [];
     }
 
 }
