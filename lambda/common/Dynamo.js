@@ -58,10 +58,10 @@ const Dynamo = {
         return documentClient.update(params).promise();
     },
 
-    async query() {
+    async query({ tableName, index, quereKey, queryValue }) {
         const params = {
             TableName: tableName,
-            IndexName: indexe,
+            IndexName: index,
             KeyConditionExpression: `${quereKey} = :hkey`,
             ExpressionAttributeValue: {
                 ':hkey': queryValue
