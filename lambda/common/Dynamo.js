@@ -14,8 +14,8 @@ const Dynamo = {
         const data = await documentClient
             .get(params)
             .promise()
-        
-        if(!data || !data.Item) {
+
+        if (!data || !data.Item) {
             throw Error(`There was an error fetching the data of ID of ${ID} from ${TableName}`);
         }
 
@@ -43,7 +43,21 @@ const Dynamo = {
         }
 
         return data;
-    }
+    },
+
+    async update({ tableName, primaryKey, primaryKeyValue, updateKey, updateValue }) {
+        const params = {
+            TableName: tableName,
+            Key: { [primaryKey]: primaryKeyValue },
+            UpdateExpression: `set ${updateKey} = :updateValue`,
+            ExpressionAttributeValue: {
+                ':updateValue': updateValue,
+            }
+        }
+
+        return documentClient.update(params).promise();
+    },
+
 }
 
 module.exports = Dynamo;
