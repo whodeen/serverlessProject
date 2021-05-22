@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "@shelf/eslint-config": "^1.1.0",
-    "@shelf/prettier-config": "^1.0.0"
+    "@shelf/prettier-config": "^1.0.0",
+    "serverless-step-functions": "2.30.0"
   },
   "prettier": "@shelf/prettier-config",
   "extends": [

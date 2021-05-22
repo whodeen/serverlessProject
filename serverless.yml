@@ -11,6 +11,7 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     bucketName: ${self:custom.bucketName}
+    signupTableName: ${self:custom.signupTableName}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -44,16 +45,31 @@ provider:
 
 plugins:
   - serverless-s3-sync
+  - serverless-step-functions
 
 package:
   individually: true
 
 custom:
   tableName: player-points
+  signupTableName: signup-table-name
   bucketName: myserverlessprojectuploadbucket-theretry
   s3Sync:
     - bucketName: ${self:custom.bucketName}
       localDir: UploadData
+
+stepFunction:
+  validate: true
+  stateMachines:
+    reminderEmail:
+      name: reminderEmail
+      events:
+        - http:
+            path: signup-with-reminders
+            method: POST
+            cors: true
+      definition: ${file(./stepFunction.yml)}
+        
 
 functions:
   getUser:
@@ -155,6 +171,19 @@ resources:
                 KeyType: HASH
             Projection:
                 ProjectionType: ALL
+
+    MyEmailSignupTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.signupTableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        
     DemoBucketUpload:
       Type: AWS::S3::Bucket
       Properties:
