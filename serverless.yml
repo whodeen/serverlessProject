@@ -140,6 +140,8 @@ functions:
           cors: true
   addSignup:
     handler: lambda/stepLambda/addSignup.handler
+  getSignup:
+    handler: lambda/stepLambda/getSignUp.handler
 
   sendReminder:
     handler: lambda/scheduledTasks/reminderEmail.handler
