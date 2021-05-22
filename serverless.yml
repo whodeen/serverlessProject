@@ -85,7 +85,15 @@ functions:
           path: update-players-score/{ID}
           method: POST
           cors: true
-          private: true
+  getGameScores:
+    handler: lambda/endpoints/getGameScores.handler
+    events:
+      - http:
+          path: get-game-score/{game}
+          method: GET
+          cors: true
+
+
   createFile:
     handler: lambda/endpoints/createFile.handler
     events:
