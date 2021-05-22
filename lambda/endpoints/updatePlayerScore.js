@@ -3,9 +3,9 @@ const Dynamo = require('../common/Dynamo');
 
 const tableName = process.env.tableName;
 
-exports.handler = async event => { 
+exports.handler = async event => {
     if (!event.pathParameters || !event.pathParameters.ID) {
-        return Responses._400({message: 'missing the ID from the path'});
+        return Responses._400({ message: 'missing the ID from the path' });
     }
 
     let ID = event.pathParameters.ID;
@@ -15,7 +15,7 @@ exports.handler = async event => {
         tableName,
         primaryKey: 'ID',
         primaryKeyValue: ID,
-        updateKey: 'score',
+        updateKey: 'Score',
         updateValue: score
     })
 
