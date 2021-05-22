@@ -138,9 +138,9 @@ functions:
           path: send-sms/
           method: POST
           cors: true
-  addSignup:
-    handler: lambda/stepLambda/addSignup.handler
-  getSignup:
+  addSignUp:
+    handler: lambda/stepLambda/addSignUp.handler
+  getSignUp:
     handler: lambda/stepLambda/getSignUp.handler
 
   sendReminder:
