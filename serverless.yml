@@ -142,6 +142,8 @@ functions:
     handler: lambda/stepLambda/addSignUp.handler
   getSignUp:
     handler: lambda/stepLambda/getSignUp.handler
+  sendReminderEmail:
+    handler: lambda/stepLambda/sendReminderEmail.handler
 
   sendReminder:
     handler: lambda/scheduledTasks/reminderEmail.handler
