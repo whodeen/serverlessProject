@@ -1,10 +1,9 @@
 const Responses = require('../common/API_Responses');
-const tableName = process.env.tableName;
 const Dynamo = require('../common/Dynamo');
 
-exports.handler = async event => {
-    console.log('event', event);
- 
+const tableName = process.env.tableName;
+
+exports.handler = async event => { 
     if (!event.pathParameters || !event.pathParameters.ID) {
         return Responses._400({message: 'missing the ID from the path'});
     }
@@ -17,8 +16,8 @@ exports.handler = async event => {
         primaryKey: 'ID',
         primaryKeyValue: ID,
         updateKey: 'score',
-        updateKeyValue: score
-    });
+        updateValue: score
+    })
 
     return Responses._200({});
 }
