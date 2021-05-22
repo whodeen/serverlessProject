@@ -58,6 +58,21 @@ const Dynamo = {
         return documentClient.update(params).promise();
     },
 
+    async query({ tableName, index, quereKey, queryValue }) {
+        const params = {
+            TableName: tableName,
+            IndexName: index,
+            KeyConditionExpression: `${quereKey} = :hkey`,
+            ExpressionAttributeValue: {
+                ':hkey': queryValue
+            }
+        };
+
+        const res = await documentClient.query(params).promise();
+
+        return res.Item || [];
+    }
+
 }
 
 module.exports = Dynamo;
