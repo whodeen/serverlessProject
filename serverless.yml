@@ -44,7 +44,6 @@ provider:
 
 plugins:
   - serverless-s3-sync
-  - serverless-webpack
 
 package:
   individually: true
@@ -76,6 +75,14 @@ functions:
     events:
       - http:
           path: create-players-score/{ID}
+          method: POST
+          cors: true
+          private: true
+  updatePlayerScore:
+    handler: lambda/endpoints/updatePlayerScore.handler
+    events:
+      - http:
+          path: update-players-score/{ID}
           method: POST
           cors: true
           private: true

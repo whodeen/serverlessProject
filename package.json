@@ -1,9 +1,20 @@
 {
+  "name": "myserverlessproject",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/whodeen/ServerlessStudyProject.git",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
-    "follow-redirects": "^1.14.1",
-    "serverless-s3-sync": "^1.17.1",
-    "serverless-webpack": "^5.5.0",
-    "webpack": "^5.37.1"
-  }
+    "axios": "0.21.1",
+    "follow-redirects": "1.14.1",
+    "serverless-s3-sync": "1.17.1"
+  },
+  "devDependencies": {
+    "@shelf/eslint-config": "^1.1.0",
+    "@shelf/prettier-config": "^1.0.0"
+  },
+  "prettier": "@shelf/prettier-config",
+  "extends": [
+    "@shelf/eslint-config/backend"
+  ]
 }
