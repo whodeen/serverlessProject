@@ -8,6 +8,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   profile: shelf-test
+  state: us-east-1
   environment:
     tableName: ${self:custom.tableName}
     bucketName: ${self:custom.bucketName}
@@ -45,10 +46,10 @@ provider:
 
 plugins:
   - serverless-s3-sync
-  - serverless-step-functions
+  # - serverless-step-functions
 
 package:
-  individually: true
+  artifact: artifact.zip
 
 custom:
   tableName: player-points
@@ -58,17 +59,17 @@ custom:
     - bucketName: ${self:custom.bucketName}
       localDir: UploadData
 
-stepFunction:
-  validate: true
-  stateMachines:
-    reminderEmail:
-      name: reminderEmail
-      events:
-        - http:
-            path: signup-with-reminders
-            method: POST
-            cors: true
-      definition: ${file(./stepFunction.yml)}
+# stepFunctions:
+#   validate: true
+#   stateMachines:
+#     somethingToFix:
+#       name: somethingToFix
+#       events:
+#         - http:
+#             path: signup-with-reminders
+#             method: POST
+#             cors: true
+#       definition: ${file(./stepFunction.yml)}
         
 
 functions:
@@ -108,8 +109,6 @@ functions:
           path: get-game-score/{game}
           method: GET
           cors: true
-
-
   createFile:
     handler: lambda/endpoints/createFile.handler
     events:
@@ -138,12 +137,12 @@ functions:
           path: send-sms/
           method: POST
           cors: true
-  addSignUp:
-    handler: lambda/stepLambda/addSignUp.handler
-  getSignUp:
-    handler: lambda/stepLambda/getSignUp.handler
-  sendReminderEmail:
-    handler: lambda/stepLambda/sendReminderEmail.handler
+  # addSignUp:
+  #   handler: lambda/stepLambda/addSignUp.handler
+  # getSignUp:
+  #   handler: lambda/stepLambda/getSignUp.handler
+  # sendReminderEmail:
+  #   handler: lambda/stepLambda/sendReminderEmail.handler
 
   sendReminder:
     handler: lambda/scheduledTasks/reminderEmail.handler
