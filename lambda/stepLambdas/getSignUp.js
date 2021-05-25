@@ -1,4 +1,4 @@
-import Dynamo from "../common/Dynamo";
+const Dynamo = require("../common/Dynamo");
 
 const tableName = process.env.signupTableName;
 

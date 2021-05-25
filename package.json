@@ -5,22 +5,33 @@
   "repository": "https://github.com/whodeen/ServerlessStudyProject.git",
   "license": "MIT",
   "scripts": {
-    "zip": "zip --quiet -r --exclude='node_modules/aws-sdk/*'     artifact.zip     lib node_modules",
-    "deploy": "npm run exclude-ts && npm run zip && sls deploy"
+    "zip": "zip --quiet -r --exclude=\"node_modules/aws-sdk/*\" artifact.zip  node_modules lambda",
+    "deploy": "sls deploy --package .serverless"
   },
   "dependencies": {
     "axios": "0.21.1",
     "follow-redirects": "1.14.1",
     "serverless-s3-sync": "1.17.1",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "uuidv4": "6.2.8"
   },
   "resolutions": {
     "aws-sdk": "2.712.0"
   },
   "devDependencies": {
-    "@shelf/eslint-config": "^1.1.0",
-    "@shelf/prettier-config": "^1.0.0",
+    "@shelf/babel-config": "0.1.2",
+    "@shelf/eslint-config": "1.1.0",
+    "@shelf/jest-dynamodb": "1.8.1",
+    "@shelf/prettier-config": "1.0.0",
+    "babel-cli": "6.26.0",
+    "jest": "26.6.3",
+    "serverless": "2.43.0",
+    "serverless-dynamodb-local": "0.2.39",
+    "serverless-offline": "7.0.0",
     "serverless-step-functions": "2.30.0"
+  },
+  "babel": {
+    "extends": "@shelf/babel-config/backend"
   },
   "prettier": "@shelf/prettier-config",
   "extends": [

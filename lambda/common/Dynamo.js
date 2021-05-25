@@ -1,6 +1,23 @@
 const AWS = require('aws-sdk');
 
-const documentClient = new AWS.DynamoDB.DocumentClient();
+let options = {}
+
+if (process.env.IS_OFFLINE) {
+    options = {
+        region: "localhost",
+        endpoint: "http://localhost:8000"
+    }
+}
+
+if (process.env.JEST_WORKER_ID) {
+    options = {
+        endpoint: "http://localhost:8000",
+        region: 'local-env',
+        sslEnabled: false,
+    };
+}
+
+const documentClient = new AWS.DynamoDB.DocumentClient(options);
 
 const Dynamo = {
     async get(ID, TableName) {
@@ -18,8 +35,6 @@ const Dynamo = {
         if (!data || !data.Item) {
             throw Error(`There was an error fetching the data of ID of ${ID} from ${TableName}`);
         }
-
-        console.log(data);
 
         return data.Item;
     },
@@ -72,7 +87,6 @@ const Dynamo = {
 
         return res.Items || [];
     }
-
 }
 
 module.exports = Dynamo;

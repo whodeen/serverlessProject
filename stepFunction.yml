@@ -5,9 +5,20 @@ States:
     Type: Task
     Resource: arn:aws:states:::lambda:invoke
     Parameters:
-      FunctionName: { "Fn::Join": [ ":", ["arn:aws:lambda:us-east-1", { "Ref": "AWS::AccountId" }, "function:${self.service-${self:provider.state}-addSignUp"]] }
+      FunctionName:
+        {
+          'Fn::Join':
+            [
+              ':',
+              [
+                'arn:aws:lambda:us-east-1',
+                {'Ref': 'AWS::AccountId'},
+                'function:${self:service}-${self:provider.stage}-addSignUp',
+              ],
+            ],
+        }
       Payload:
-        Input.$: "$"
+        Input.$: '$'
     Next: wait for 24hr
   wait for 24hr:
     Type: Wait
@@ -17,24 +28,46 @@ States:
     Type: Task
     Resource: arn:aws:states:::lambda:invoke
     Parameters:
-      FunctionName: { "Fn::Join": [ ":", ["arn:aws:lambda:us-east-1", { "Ref": "AWS::AccountId" }, "function:${self.service-${self:provider.state}-getSignUp"]] }
+      FunctionName:
+        {
+          'Fn::Join':
+            [
+              ':',
+              [
+                'arn:aws:lambda:us-east-1',
+                {'Ref': 'AWS::AccountId'},
+                'function:${self:service}-${self:provider.stage}-getSignUp',
+              ],
+            ],
+        }
       Payload:
-        Input.$: "$"
+        Input.$: '$'
     Next: has played
   has played:
     Type: Choice
     Choices:
-    - Variable: "$.Payload.played"
-      StringEquals: 'true'
-      Next: close
+      - Variable: '$.Payload.played'
+        StringEquals: 'true'
+        Next: close
     Default: send reminder email
   send reminder email:
     Type: Task
     Resource: arn:aws:states:::lambda:invoke
     Parameters:
-      FunctionName: { "Fn::Join": [ ":", ["arn:aws:lambda:us-east-1", { "Ref": "AWS::AccountId" }, "function:${self.service-${self:provider.state}-sendReminderEmail"]] }
+      FunctionName:
+        {
+          'Fn::Join':
+            [
+              ':',
+              [
+                'arn:aws:lambda:us-east-1',
+                {'Ref': 'AWS::AccountId'},
+                'function:${self:service}-${self:provider.stage}-sendReminderEmail',
+              ],
+            ],
+        }
       Payload:
-        Input.$: "$"
+        Input.$: '$'
     Next: close
   close:
     Type: Succeed

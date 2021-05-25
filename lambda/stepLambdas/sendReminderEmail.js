@@ -1,4 +1,4 @@
-import * as AWS from 'aws-sdk'
+const AWS = require('aws-sdk');
 
 const SES = new AWS.SES();
 

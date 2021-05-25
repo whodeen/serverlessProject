@@ -1,12 +1,21 @@
-import Dynamo from "../common/Dynamo";
-import { v4 as uuid } from 'uuid';
+const Dynamo = require("../common/Dynamo");
+const { v4: uuid } = require("uuid");
 
 const tableName = process.env.signupTableName;
 
 exports.handler = async event => {
     console.log(event);
 
-    const email = event.Input.signup.email;
+    someObject = {
+        Input: {
+            signup: {
+                email: 'whodeen@gmail.com'
+            }
+        }
+
+    }
+
+    const email = someObject.Input.signup.email;
     const ID = uuid();
 
     await Dynamo.write({ email, ID, played: 'false' }, tableName);

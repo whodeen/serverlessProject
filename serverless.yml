@@ -2,7 +2,7 @@ org: oleksandrfedoniuk
 app: myserverlessproject
 service: myserverlessproject
 
-frameworkVersion: "2"
+frameworkVersion: '2'
 
 provider:
   name: aws
@@ -21,35 +21,34 @@ provider:
         - ses:*
         - sns:SetSMSAttributes
         - sns:Publish
-      Resource: "*"
+      Resource: '*'
   apiGateway:
-      apiKeys:
-        - free:
-            - myFreeKey
-        - paid:
-            - myPaidKey
-      usagePlan:
-        - free:
-            quota:
-              limit: 5000
-              period: MONTH
-            throttle:
-              burstLimit: 200
-              rateLimit: 100
-        - paid:
-            quota:
-              limit: 50000
-              period: MONTH
-            throttle:
-              burstLimit: 2000
-              rateLimit: 1000
+    apiKeys:
+      - free:
+          - myFreeKey
+      - paid:
+          - myPaidKey
+    usagePlan:
+      - free:
+          quota:
+            limit: 5000
+            period: MONTH
+          throttle:
+            burstLimit: 200
+            rateLimit: 100
+      - paid:
+          quota:
+            limit: 50000
+            period: MONTH
+          throttle:
+            burstLimit: 2000
+            rateLimit: 1000
 
 plugins:
   - serverless-s3-sync
-  # - serverless-step-functions
-
-package:
-  artifact: artifact.zip
+  - serverless-step-functions
+  - serverless-offline
+  - serverless-dynamodb-local
 
 custom:
   tableName: player-points
@@ -58,19 +57,27 @@ custom:
   s3Sync:
     - bucketName: ${self:custom.bucketName}
       localDir: UploadData
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    migration:
+      dir: offline/migrations
 
-# stepFunctions:
-#   validate: true
-#   stateMachines:
-#     somethingToFix:
-#       name: somethingToFix
-#       events:
-#         - http:
-#             path: signup-with-reminders
-#             method: POST
-#             cors: true
-#       definition: ${file(./stepFunction.yml)}
-        
+stepFunctions:
+  validate: true
+  stateMachines:
+    somethingToFix:
+      name: somethingToFix
+      events:
+        - http:
+            path: signup-with-reminders
+            method: POST
+            cors: true
+      definition: ${file(./stepFunction.yml)}
 
 functions:
   getUser:
@@ -94,7 +101,6 @@ functions:
           path: create-players-score/{ID}
           method: POST
           cors: true
-          private: true
   updatePlayerScore:
     handler: lambda/endpoints/updatePlayerScore.handler
     events:
@@ -137,23 +143,23 @@ functions:
           path: send-sms/
           method: POST
           cors: true
-  # addSignUp:
-  #   handler: lambda/stepLambda/addSignUp.handler
-  # getSignUp:
-  #   handler: lambda/stepLambda/getSignUp.handler
-  # sendReminderEmail:
-  #   handler: lambda/stepLambda/sendReminderEmail.handler
+  addSignUp:
+    handler: lambda/stepLambdas/addSignUp.handler
+  getSignUp:
+    handler: lambda/stepLambdas/getSignUp.handler
+  sendReminderEmail:
+    handler: lambda/stepLambdas/sendReminderEmail.handler
 
   sendReminder:
     handler: lambda/scheduledTasks/reminderEmail.handler
     events:
       - schedule: cron(25 19 ? * 5 *)
-      # min hours dayofthemonth dayoftheweek yearoffire 
+      # min hours dayofthemonth dayoftheweek yearoffire
   sendMorningNews:
     handler: lambda/scheduledTasks/morningNews.handler
     events:
       - schedule: cron(10 20 ? * * *)
-      
+
 resources:
   Resources:
     DynamoDBTable:
@@ -169,14 +175,14 @@ resources:
           - AttributeName: ID
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        
+
         GlobalSecondaryIndexes:
           - IndexName: game-index
             KeySchema:
               - AttributeName: game
                 KeyType: HASH
             Projection:
-                ProjectionType: ALL
+              ProjectionType: ALL
 
     MyEmailSignupTable:
       Type: AWS::DynamoDB::Table
@@ -189,7 +195,7 @@ resources:
           - AttributeName: ID
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        
+
     DemoBucketUpload:
       Type: AWS::S3::Bucket
       Properties:
