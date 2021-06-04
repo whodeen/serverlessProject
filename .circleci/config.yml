@@ -21,9 +21,9 @@ jobs:
           command: sls deploy
 
 workflows:
-  build-and-deploy: 
+  build-and-test: 
     jobs:
-      - build-and-deploy:
+      - build-and-test:
           context: serverlessProject
           filter:
             branches:
