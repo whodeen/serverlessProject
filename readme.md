@@ -50,7 +50,7 @@ Request
 }
 ```
 
-DynamoDB stores
+DynamoDB
 
 ```json
 {
