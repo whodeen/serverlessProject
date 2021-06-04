@@ -16,7 +16,7 @@ Token
 
 ```json
 {
-	"hash_key": "token#[token]",
+  "hash_key": "token#[token]",
   "range_key": "token",
   "username": "string",
   "date": "10-10-2000"
