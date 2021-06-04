@@ -28,7 +28,7 @@ Exchange
 ```json
 {
   "hash_key": "user#[string]",
-  "range_key": "exchange#ID#conversion#ID",
+  "range_key": "exchange#[ulid]#conversion#[ulid]",
   "created": "ISOString",
   "from": "string",
   "result": "number",
