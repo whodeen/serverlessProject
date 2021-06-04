@@ -1,29 +1,30 @@
 # DynamoDB models
 
+User
 ```json
 {
-  **"hash_key": "user#username",**
-	**"range_key": "profile#",**
+  "hash_key": "user#username",
+	"range_key": "profile#",
   "email": "string",
   "password": "string",
   "created": "Date"
 }
 ```
-
+Token
 ```json
 {  
-	**"hash_key": "token#[token]"
-  "range_key": "token",**
+	"hash_key": "token#[token]",
+  "range_key": "token",
   "username": "string",
 	"date": "10-10-2000"
-  **}],**
+  }],
 }
 ```
-
+Exchange
 ```json
 {
-  **"hash_key": "user#username",
-  "range_key": "exchange#ID#conversion#ID",**
+  "hash_key": "user#username",
+  "range_key": "exchange#ID#conversion#ID",
   "created": "10-10-2020",
   "from": "btc",
   "result": 89989403.88574,
@@ -48,7 +49,7 @@ Request
 }
 ```
 
-DynamoDB
+DynamoDB stores
 
 ```json
 {
@@ -56,8 +57,8 @@ DynamoDB
   "range": "exchange#1#conversion#1",
   "created": "10-10-2020",
   "from": "btc",
-  **"result": 89989403.88574,
-  "to": "uah",**
+  "result": 89989403.88574,
+  "to": "uah",
   "value": 85
 }
 
@@ -66,8 +67,8 @@ DynamoDB
   "range": "exchange#1#conversion#2",
   "created": "10-10-2020",
   "from": "btc",
-  **"result": 241264531.63394502,
-  "to": "rub",**
+  "result": 241264531.63394502,
+  "to": "rub",
   "value": 85
 }
 
@@ -76,8 +77,8 @@ DynamoDB
   "range": "exchange#1#conversion#3",
   "created": "10-10-2020",
   "from": "btc",
-  **"result": 3293727.23207,
-  "to": "usd",**
+  "result": 3293727.23207,
+  "to": "usd",
   "value": 85
 }
 ```
