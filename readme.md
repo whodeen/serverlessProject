@@ -1,26 +1,31 @@
 # DynamoDB models
 
 User
+
 ```json
 {
   "hash_key": "user#username",
-	"range_key": "profile#",
+  "range_key": "profile#",
   "email": "string",
   "password": "string",
   "created": "Date"
 }
 ```
+
 Token
+
 ```json
-{  
+{
 	"hash_key": "token#[token]",
   "range_key": "token",
   "username": "string",
-	"date": "10-10-2000"
+  "date": "10-10-2000"
   }],
 }
 ```
+
 Exchange
+
 ```json
 {
   "hash_key": "user#username",
@@ -38,14 +43,10 @@ Exchange
 Request
 
 ```json
-{    
-    "fromCurrency": "btc",
-    "value": 85,
-    "toCurrencies": [
-        "uah", 
-        "rub", 
-        "usd"
-    ]
+{
+  "fromCurrency": "btc",
+  "value": 85,
+  "toCurrencies": ["uah", "rub", "usd"]
 }
 ```
 
