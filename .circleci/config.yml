@@ -25,7 +25,3 @@ workflows:
     jobs:
       - build-and-test:
           context: serverlessProject
-          filter:
-            branches:
-              only:
-                - l23-CI
