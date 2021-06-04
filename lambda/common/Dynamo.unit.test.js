@@ -1,4 +1,5 @@
 const Dynamo = require("../common/Dynamo");
+const axios = require('axios');
 
 test("Dynamo is an object", () => {
     expect(typeof Dynamo).toBe('object');
@@ -12,25 +13,22 @@ test("Dynamo has get and write", () => {
 const validTableName = "player-points";
 const data = { ID: '23123123', score: 25, name: 'Jim' }
 
-test('Dynamo write works', async () => {
+
+test("PROMISE: User fetched name should be Leanne Graham", () => {
     expect.assertions(1);
+    let some = axios.get("https://jsonplaceholder.typicode.com/users/1")
+        .then(res => res.data)
+        .catch(err => 'error');
 
-    try {
-        const res = await Dynamo.write(data, validTableName);
-        expect(res).toBe(data);
-    } catch (err) {
-        console.log("Error in Dynamo write test", err);
-    }
-});
+    return some.then(data => {
+        expect(data.name).toEqual("Leanne Graham");
+    });
+})
 
-test("Dynamo get works", async () => {
-    expect.assertions(1);
+test("ASYNC: User fetched name should be Leanne Graham", async () => {
+    let data = await axios.get("https://jsonplaceholder.typicode.com/users/1")
+        .then(res => res.data)
+        .catch(err => 'error');
 
-    try {
-        const res = await Dynamo.get(data.ID, validTableName);
-        expect(res).toBe(data);
-    } catch (err) {
-        console.log('Error in dynamo get test', err);
-    }
-});
-
+    expect(data.name).toEqual("Leanne Graham");
+})

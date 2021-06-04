@@ -149,6 +149,13 @@ functions:
     handler: lambda/stepLambdas/getSignUp.handler
   sendReminderEmail:
     handler: lambda/stepLambdas/sendReminderEmail.handler
+  getCurrencies:
+    handler: lambda/endpoints/getCurrencies.handler
+    events:
+      - http:
+          path: getCurrencies/
+          method: GET
+          cors: true
 
   sendReminder:
     handler: lambda/scheduledTasks/reminderEmail.handler
