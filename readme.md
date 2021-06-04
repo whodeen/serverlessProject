@@ -4,11 +4,11 @@ User
 
 ```json
 {
-  "hash_key": "user#username",
+  "hash_key": "user#[string]",
   "range_key": "profile#",
+  "created": "ISOString",
   "email": "string",
   "password": "string",
-  "created": "Date"
 }
 ```
 
@@ -16,11 +16,10 @@ Token
 
 ```json
 {
-  "hash_key": "token#[token]",
+  "hash_key": "token#[string]",
   "range_key": "token",
   "username": "string",
-  "date": "10-10-2000"
-  }],
+  "created": "ISOString"
 }
 ```
 
@@ -28,13 +27,13 @@ Exchange
 
 ```json
 {
-  "hash_key": "user#username",
+  "hash_key": "user#[username]",
   "range_key": "exchange#ID#conversion#ID",
-  "created": "10-10-2020",
-  "from": "btc",
-  "result": 89989403.88574,
-  "to": "uah",
-  "value": 85
+  "created": "ISOString",
+  "from": "string",
+  "result": "number",
+  "to": "string",
+  "value": "number"
 }
 ```
 
